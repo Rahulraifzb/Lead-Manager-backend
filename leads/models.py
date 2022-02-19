@@ -1,4 +1,6 @@
+from distutils.command.upload import upload
 from email.mime import image
+from email.policy import default
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -8,6 +10,7 @@ class Lead(models.Model):
     name = models.CharField(max_length=100)
     email = models.EmailField(max_length=100,unique=True)
     message = models.CharField(max_length=500,blank=True)
+    image = models.ImageField(default="default.png",upload_to="leads",null=True,blank=True)
     owner = models.ForeignKey(User,related_name="leads",on_delete=models.CASCADE,null=True,blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
