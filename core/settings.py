@@ -1,3 +1,5 @@
+import os
+import django_heroku
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -6,7 +8,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-lm#=u*%n$z99u^tlrn1bxw0%g$q=bknxv3vnw-s-vi!vld1@ei'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
@@ -39,6 +41,7 @@ REST_FRAMEWORK = {
 
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -129,3 +132,14 @@ CORS_ALLOW_ALL_ORIGINS = True
 MEDIA_URL = "media/"
 
 MEDIA_ROOT = "media/"
+
+STATICFILES_DIRS = [ 
+    os.path.join(BASE_DIR,"statis")
+]
+
+# Activate Django-Heroku.
+django_heroku.settings(locals())
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
